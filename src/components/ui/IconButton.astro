@@ -1,0 +1,45 @@
+---
+interface Props {
+  icon: string;
+  variant?: "primary" | "secondary" | "ghost";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+  [key: string]: any;
+}
+
+const {
+  icon,
+  variant = "ghost",
+  size = "md",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const variantClasses = {
+  primary:
+    "border-[#89b29e] bg-[#89b29e] text-[#2a252a] hover:bg-[#7ba088] hover:border-[#7ba088]",
+  secondary:
+    "border-[#89b29e]/30 bg-[#2a252a] text-[#89b29e] hover:border-[#89b29e] hover:bg-[#89b29e]/10",
+  ghost:
+    "border-transparent bg-transparent text-gray-400 hover:bg-[#89b29e]/10 hover:text-[#89b29e]",
+};
+
+const sizeClasses = {
+  sm: "h-8 w-8 p-1.5",
+  md: "h-10 w-10 p-2",
+  lg: "h-12 w-12 p-3",
+};
+
+const iconSizes = {
+  sm: "text-base",
+  md: "text-xl",
+  lg: "text-2xl",
+};
+---
+
+<button
+  class={`inline-flex items-center justify-center rounded-lg border-2 transition-all duration-300 hover:scale-110 ${variantClasses[variant]} ${sizeClasses[size]} ${className || ""}`}
+  {...rest}
+>
+  <i class={`${icon} ${iconSizes[size]}`} aria-hidden="true"></i>
+</button>

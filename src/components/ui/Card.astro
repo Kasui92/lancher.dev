@@ -1,0 +1,26 @@
+---
+interface Props {
+  variant?: "default" | "elevated" | "outlined";
+  hover?: boolean;
+  class?: string;
+}
+
+const { variant = "default", hover = true, class: className } = Astro.props;
+
+const variantClasses = {
+  default: "border border-[#333] bg-[#2a2a2a]",
+  elevated:
+    "border border-[#333] bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] shadow-[0_8px_20px_rgba(0,0,0,0.3)]",
+  outlined: "border-2 border-[#89b29e]/30 bg-transparent",
+};
+
+const hoverClasses = hover
+  ? "transition-all duration-300 hover:border-[#89b29e] hover:scale-105"
+  : "";
+---
+
+<div
+  class={`rounded-lg ${variantClasses[variant]} ${hoverClasses} ${className || ""}`}
+>
+  <slot />
+</div>

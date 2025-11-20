@@ -1,0 +1,57 @@
+@import "https://www.nerdfonts.com/assets/css/webfont.css";
+
+@import "tailwindcss";
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    color: #f2f2f2e6;
+  }
+
+  h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: normal;
+  }
+
+  a {
+    @apply font-bold text-[#89b29ee6] underline transition duration-300 ease-in-out hover:text-[#c5d4c8];
+  }
+
+  i {
+    @apply text-[#89b29ee6] italic;
+  }
+}
+
+header,
+section,
+footer {
+  @apply mx-auto mt-0 max-w-[800px];
+}
+
+section {
+  @apply mb-12;
+}
+
+i.nf {
+  @apply text-[#f2f2f2e6];
+}
+
+.hidden-toggle[aria-expanded="true"] .arrow {
+  transform: rotate(180deg);
+}
+
+.hidden-content {
+  max-height: 0;
+}
+
+.hidden-content.expanded {
+  max-height: 1000px;
+}
