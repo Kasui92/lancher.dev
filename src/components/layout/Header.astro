@@ -1,22 +1,10 @@
 ---
-const { title, subtitle, accessibleName } = Astro.props;
+
 ---
 
 <header
   class="mb-6 px-0 py-4 text-center lg:mb-3"
   aria-labelledby="header-heading"
 >
-  {
-    accessibleName && (
-      <h2 class="sr-only" id="header-heading">
-        {accessibleName}
-      </h2>
-    )
-  }
-  <h1 class="text-[2rem] font-bold text-[#89b29ee6] lg:text-[3rem]">
-    {title}
-  </h1>
-  <p class="text-[1.2rem] text-[#d8d9d9e6]">
-    {subtitle}
-  </p>
+  <slot />
 </header>
