@@ -26,7 +26,7 @@ const codeId = `code-${Math.random().toString(36).substr(2, 9)}`;
   {
     copyable && (
       <button
-        class="ml-4 flex flex-shrink-0 cursor-pointer items-center justify-center rounded border border-[#555] bg-[#333] px-4 py-2 text-xs text-[#bbb] transition-colors hover:bg-[#444] hover:text-white"
+        class="ml-4 flex shrink-0 cursor-pointer items-center justify-center rounded border border-[#555] bg-[#333] px-4 py-2 text-xs text-[#bbb] transition-colors hover:bg-[#444] hover:text-white"
         data-copy-code={code}
         title="Copy to clipboard"
         aria-label="Copy code to clipboard"
