@@ -1,12 +1,53 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import { getCollection, getEntry, render } from "astro:content";
+import { parseDocCollectionId, sortDocPages } from "@/utils/docs";
+import DocsLayout from "@/layouts/DocsLayout.astro";
+
+// Find the home page or redirect to first page
+const docsCollection = await getCollection("docsPages");
+const sortedPages = sortDocPages(docsCollection);
+
+// Check if first page is "01-home"
+const firstPage = sortedPages[0];
+if (!firstPage) {
+  return Astro.redirect("/404");
+}
+
+const firstParsed = parseDocCollectionId(firstPage.id, true);
+const isHomePage =
+  firstParsed.slug.toLowerCase() === "home" && firstParsed.order === 1;
+
+if (!isHomePage) {
+  // No home page, redirect to first page with clean URL
+  const parts = firstPage.id.split("/");
+  const cleanParts = parts.map((part) => part.replace(/^\d+-/, ""));
+  const cleanSlug = cleanParts.join("/");
+  return Astro.redirect(`/docs/${cleanSlug}`);
+}
+
+// Render the home page directly at /docs
+const docPage = await getEntry("docsPages", firstPage.id);
+if (!docPage) {
+  return Astro.redirect("/404");
+}
+
+const { Content } = await render(docPage);
+const pageTitle = "Documentation";
 ---
 
-<Layout>
-  <section aria-labelledby="intro-heading">
-    <h2 class="sr-only" id="intro-heading">Introduction</h2>
-    <p class="mt-6 mb-16 text-[1.1rem] leading-[1.8] text-[#ccc]">
-      Work in progress...
-    </p>
-  </section>
-</Layout>
+<DocsLayout title={pageTitle}>
+  <main
+    role="main"
+    aria-label="Main content"
+    class="mx-0 my-20 flex-1 px-0 py-0 md:my-16 md:px-8 lg:my-32 lg:px-16"
+  >
+    <article>
+      <div
+        id="content"
+        class="markdown-content mx-auto w-full max-w-3xl p-4 leading-relaxed wrap-break-word"
+      >
+        <Content />
+      </div>
+    </article>
+  </main>
+</DocsLayout>

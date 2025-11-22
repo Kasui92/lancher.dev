@@ -1,0 +1,76 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+import { parseDocCollectionId, sortDocPages } from "@/utils/docs";
+
+import DocsLayout from "@/layouts/DocsLayout.astro";
+
+export async function getStaticPaths() {
+  const docsCollection = await getCollection("docsPages");
+
+  // Sort all pages using the utility function
+  const sortedPages = sortDocPages(docsCollection);
+
+  // Generate paths for each page
+  const paths = sortedPages.map((page) => {
+    const parsed = parseDocCollectionId(page.id, true);
+
+    // Build clean URL without order numbers
+    const parts = page.id.split("/");
+    const cleanParts = parts.map((part) => {
+      // Remove order prefix (e.g., "01-intro" -> "intro")
+      return part.replace(/^\d+-/, "");
+    });
+
+    const cleanSlug = cleanParts.join("/");
+    const isHomePage =
+      parsed.slug.toLowerCase() === "home" && parsed.order === 1;
+
+    return {
+      params: {
+        slug: cleanSlug,
+      },
+      props: {
+        id: page.id,
+        title: parsed.title,
+        slug: parsed.slug,
+        chapter: parsed.chapter,
+        isFirstPage: isHomePage,
+      },
+    };
+  });
+
+  return paths;
+}
+
+const { id, title, isFirstPage } = Astro.props;
+
+const docPage = await getEntry("docsPages", id);
+if (!docPage) {
+  return Astro.redirect("/docs");
+}
+
+const { Content } = await render(docPage);
+
+// Set page title
+const pageTitle =
+  isFirstPage && title.toLowerCase() === "home"
+    ? "Documentation"
+    : `Documentation - ${title}`;
+---
+
+<DocsLayout title={pageTitle}>
+  <main
+    role="main"
+    aria-label="Main content"
+    class="mx-0 my-20 flex-1 px-0 py-0 md:my-16 md:px-8 lg:my-32 lg:px-16"
+  >
+    <article>
+      <div
+        id="content"
+        class="markdown-content mx-auto w-full max-w-3xl p-4 leading-relaxed wrap-break-word"
+      >
+        <Content />
+      </div>
+    </article>
+  </main>
+</DocsLayout>
