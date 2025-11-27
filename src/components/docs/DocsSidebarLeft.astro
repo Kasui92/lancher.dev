@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { parseDocCollectionId, sortDocPages } from "@/utils/docs";
+import { parseDocCollectionId, sortDocPages, formatChapterTitle } from "@/utils/docs";
 
 interface Props {
   currentSlug: string;
@@ -20,35 +20,53 @@ const navItems = sortedPages.map((page) => {
 
   return {
     title: parsed.title,
+    chapter: parsed.chapter,
     href: `/docs/${cleanSlug}`,
     isActive: currentSlug === cleanSlug,
   };
 });
+
+const grouped = navItems.reduce(
+  (acc, item) => {
+    const chapter = item.chapter || "General";
+    if (!acc[chapter]) acc[chapter] = [];
+    acc[chapter].push(item);
+    return acc;
+  },
+  {} as Record<string, typeof navItems>,
+);
 ---
 
 <aside
   class="docs-sidebar-left fixed top-0 left-0 hidden h-screen w-64 overflow-y-auto px-6 py-8 pt-24 lg:block"
 >
   <nav aria-label="Documentation navigation">
-    <ul class="space-y-1">
-      {
-        navItems.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              class:list={[
-                "block rounded px-3 py-2 text-sm transition-colors",
-                item.isActive
-                  ? "bg-[#89b29e1a] font-semibold text-[#89b29e]"
-                  : "text-[#e0e0e0] hover:bg-[#89b29e0d] hover:text-[#89b29e]",
-              ]}
-              aria-current={item.isActive ? "page" : undefined}
-            >
-              {item.title}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      Object.entries(grouped).map(([chapter, pages]) => (
+        <div class="mb-6">
+          <h3 class="mb-2 px-3 text-xs font-semibold tracking-wider text-[#89b29e99] uppercase">
+            {formatChapterTitle(chapter)}
+          </h3>
+          <ul class="space-y-1">
+            {pages.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[
+                    "block rounded px-3 py-2 text-sm transition-colors",
+                    item.isActive
+                      ? "bg-[#89b29e1a] font-semibold text-[#89b29e]"
+                      : "text-[#e0e0e0] hover:bg-[#89b29e0d] hover:text-[#89b29e]",
+                  ]}
+                  aria-current={item.isActive ? "page" : undefined}
+                >
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
   </nav>
 </aside>

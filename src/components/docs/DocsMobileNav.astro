@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { parseDocCollectionId, sortDocPages } from "@/utils/docs";
+import { parseDocCollectionId, sortDocPages, formatChapterTitle } from "@/utils/docs";
 
 interface Props {
   currentSlug: string;
@@ -47,7 +47,7 @@ const grouped = navItems.reduce(
     >
       {
         Object.entries(grouped).map(([chapter, pages]) => (
-          <optgroup label={chapter}>
+          <optgroup label={formatChapterTitle(chapter) || chapter}>
             {pages.map((page) => (
               <option value={page.href} selected={page.isActive}>
                 {page.title}

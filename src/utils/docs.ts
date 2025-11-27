@@ -51,13 +51,7 @@ export function parseDocCollectionId(
     .map((word) => ucfirst(word))
     .join(" ");
 
-  return {
-    slug,
-    orderChapter,
-    chapter,
-    order,
-    title,
-  };
+  return { order, orderChapter, chapter, slug, title };
 }
 
 /**
