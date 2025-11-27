@@ -1,0 +1,108 @@
+---
+export interface Props {
+  selector?: string;
+}
+
+const { selector = ".markdown-content" } = Astro.props;
+---
+
+<script is:inline define:vars={{ selector }}>
+  function initMarkdownEnhancements() {
+    /**
+     * Function to add heading links (h2)
+     * @returns {void}
+     */
+    function addHeadingLinks() {
+      const headerElements = document.querySelectorAll(
+        `${selector} h2, ${selector} h3`,
+      );
+
+      headerElements.forEach((header) => {
+        // Create anchor ID from header text
+        const text = header.textContent || "";
+        const anchorId = text
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, "")
+          .replace(/\s+/g, "-")
+          .trim();
+
+        header.id = anchorId;
+
+        // Create link icon
+        const linkIcon = document.createElement("a");
+        linkIcon.className = "heading-links";
+        linkIcon.innerHTML = "<i class='nf nf-md-link_variant'></i>";
+        linkIcon.setAttribute("aria-label", `Link to ${text}`);
+        linkIcon.setAttribute("href", `#${anchorId}`);
+        linkIcon.title = "Copy link to clipboard";
+
+        // Add click handler to copy link
+        linkIcon.addEventListener("click", async (e) => {
+          e.preventDefault();
+          const url = `${window.location.origin}${window.location.pathname}#${anchorId}`;
+
+          try {
+            await navigator.clipboard.writeText(url);
+          } catch (err) {
+            console.error("Failed to copy link:", err);
+          }
+        });
+
+        header.appendChild(linkIcon);
+      });
+    }
+
+    /**
+     * Function to add copy buttons to code blocks
+     * @returns {void}
+     */
+    function addCopyButtonsToCodeBlocks() {
+      const codeBlocks = document.querySelectorAll(`${selector} pre`);
+
+      codeBlocks.forEach((block) => {
+        // Skip if button already exists
+        if (block.querySelector(".code-copy-button")) return;
+
+        const codeElement = block.querySelector("code");
+        if (!codeElement) return;
+
+        const button = document.createElement("button");
+        button.className = "code-copy-button";
+        button.innerHTML = '<i class="nf nf-md-content_copy"></i>';
+        button.title = "Copy code to clipboard";
+        button.setAttribute("aria-label", "Copy code to clipboard");
+
+        button.addEventListener("click", async () => {
+          try {
+            const text = codeElement.textContent || "";
+            await navigator.clipboard.writeText(text);
+
+            // Visual feedback
+            const originalIcon = button.innerHTML;
+            button.innerHTML = '<i class="nf nf-md-check"></i>';
+            button.style.color = "#4ade80";
+
+            setTimeout(() => {
+              button.innerHTML = originalIcon;
+              button.style.color = "";
+            }, 2000);
+          } catch (err) {
+            console.error("Failed to copy code:", err);
+          }
+        });
+
+        block.appendChild(button);
+      });
+    }
+
+    // Run all enhancements
+    addHeadingLinks();
+    addCopyButtonsToCodeBlocks();
+  }
+
+  // Initialize on page load
+  initMarkdownEnhancements();
+
+  // Re-initialize on view transitions
+  document.addEventListener("astro:page-load", initMarkdownEnhancements);
+</script>

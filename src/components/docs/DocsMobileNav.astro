@@ -1,0 +1,144 @@
+---
+import { getCollection } from "astro:content";
+import {
+  parseDocCollectionId,
+  sortDocPages,
+  formatChapterTitle,
+} from "@/utils/docs";
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+
+const docsCollection = await getCollection("docsPages");
+const sortedPages = sortDocPages(docsCollection);
+
+const navItems = sortedPages.map((page) => {
+  const parsed = parseDocCollectionId(page.id, true);
+  const cleanSlug = page.id
+    .split("/")
+    .map((part) => part.replace(/^\d+-/, ""))
+    .join("/");
+
+  return {
+    title: parsed.title,
+    chapter: parsed.chapter,
+    href: `/docs/${cleanSlug}`,
+    isActive: currentSlug === cleanSlug,
+  };
+});
+
+const grouped = navItems.reduce(
+  (acc, item) => {
+    const chapter = item.chapter || "General";
+    if (!acc[chapter]) acc[chapter] = [];
+    acc[chapter].push(item);
+    return acc;
+  },
+  {} as Record<string, typeof navItems>,
+);
+---
+
+<div class="docs-mobile-nav mb-8 space-y-4 lg:hidden">
+  <!-- Page selector -->
+  <div class="w-full">
+    <label for="page-select" class="sr-only">Select page</label>
+    <select
+      id="page-select"
+      class="w-full rounded-lg border border-[#89b29e33] bg-[#1a1a1a] px-4 py-3 text-[#e0e0e0] transition-colors focus:border-[#89b29e] focus:outline-none"
+    >
+      {
+        Object.entries(grouped).map(([chapter, pages]) => (
+          <optgroup label={formatChapterTitle(chapter) || chapter}>
+            {pages.map((page) => (
+              <option value={page.href} selected={page.isActive}>
+                {page.title}
+              </option>
+            ))}
+          </optgroup>
+        ))
+      }
+    </select>
+  </div>
+
+  <div class="w-full">
+    <label for="section-select" class="sr-only">Jump to section</label>
+    <select
+      id="section-select"
+      class="w-full rounded-lg border border-[#89b29e33] bg-[#1a1a1a] px-4 py-3 text-[#e0e0e0] transition-colors focus:border-[#89b29e] focus:outline-none"
+    >
+      <option value="">Jump to section...</option>
+      <!-- Will be populated by client-side script -->
+    </select>
+  </div>
+</div>
+
+<!-- Scroll to top button -->
+<button
+  id="scroll-to-top"
+  class="pointer-events-none fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#89b29e] text-[#221e22] opacity-0 shadow-lg transition-opacity duration-300 hover:bg-[#a5c9b5] lg:hidden"
+  aria-label="Scroll to top"
+>
+  <i class="nf nf-md-arrow_up text-2xl"></i>
+</button>
+
+<script is:inline>
+  function initMobileNav() {
+    const pageSelect = document.getElementById("page-select");
+    const sectionSelect = document.getElementById("section-select");
+    const content = document.getElementById("content");
+    const scrollBtn = document.getElementById("scroll-to-top");
+
+    pageSelect?.addEventListener("change", (e) => {
+      const value = e.target.value;
+      if (value) window.location.href = value;
+    });
+
+    if (sectionSelect && content) {
+      const headings = content.querySelectorAll("h2, h3");
+      sectionSelect.innerHTML = '<option value="">Jump to section...</option>';
+
+      headings.forEach((heading) => {
+        if (!heading.id) return;
+        const option = document.createElement("option");
+        option.value = `#${heading.id}`;
+        const isH3 = heading.tagName.toLowerCase() === "h3";
+        const prefix = isH3 ? "  " : "";
+        option.textContent =
+          prefix + (heading.textContent?.replace(/^#\s*/, "") || "");
+        sectionSelect.appendChild(option);
+      });
+
+      sectionSelect.addEventListener("change", (e) => {
+        const value = e.target.value;
+        if (value) {
+          document
+            .querySelector(value)
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+          setTimeout(() => (sectionSelect.value = ""), 500);
+        }
+      });
+    }
+
+    if (scrollBtn) {
+      const toggle = () => {
+        const show = window.scrollY > 300;
+        scrollBtn.classList.toggle("opacity-0", !show);
+        scrollBtn.classList.toggle("pointer-events-none", !show);
+        scrollBtn.classList.toggle("opacity-100", show);
+        scrollBtn.classList.toggle("pointer-events-auto", show);
+      };
+
+      window.addEventListener("scroll", toggle);
+      toggle();
+      scrollBtn.addEventListener("click", () =>
+        window.scrollTo({ top: 0, behavior: "smooth" }),
+      );
+    }
+  }
+
+  initMobileNav();
+  document.addEventListener("astro:page-load", initMobileNav);
+</script>

@@ -1,0 +1,81 @@
+---
+import Footer from "@/components/layout/Footer.astro";
+import Nav from "@/components/layout/Nav.astro";
+import MarkdownEnhancements from "@/components/MarkdownEnhancements.astro";
+import DocsSidebarLeft from "@/components/docs/DocsSidebarLeft.astro";
+import DocsSidebarRight from "@/components/docs/DocsSidebarRight.astro";
+
+import "@/styles/global.css";
+import "@/styles/docs.css";
+import "remark-github-blockquote-alert/alert.css";
+import "@/styles/markdown.css";
+
+interface Props {
+  title?: string;
+  currentSlug?: string;
+}
+
+const { title, currentSlug = "" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="lancher - A minimal, local project-template manager written in Go. "
+    />
+    <title>lancher - Docs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:url" content="https://lancher.dev" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="lancher - A minimal, local project-template manager written in Go."
+    />
+    <meta
+      property="og:description"
+      content="A minimal, local project-template manager written in Go."
+    />
+    <meta property="og:image" content="https://lancher.dev/og-image.png" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content="lancher.dev" />
+    <meta property="twitter:url" content="https://lancher.dev" />
+    <meta
+      name="twitter:title"
+      content="lancher - A minimal, local project-template manager written in Go."
+    />
+    <meta
+      name="twitter:description"
+      content="A minimal, local project-template manager written in Go."
+    />
+    <meta name="twitter:image" content="https://lancher.dev/og-image.png" />
+
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body
+    class="font-monospace flex min-h-screen flex-col bg-[#221e22] font-mono text-[14px] leading-[1.6] text-[#e0e0e0]"
+  >
+    <Nav />
+
+    <div class="docs-container relative">
+      <DocsSidebarLeft currentSlug={currentSlug} />
+
+      <div class="docs-main lg:mr-64 lg:ml-64">
+        <slot />
+      </div>
+
+      <DocsSidebarRight />
+    </div>
+
+    <MarkdownEnhancements />
+    <Footer />
+  </body>
+</html>

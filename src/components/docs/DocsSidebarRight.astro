@@ -1,0 +1,83 @@
+<aside
+  class="docs-sidebar-right fixed top-0 right-0 hidden h-screen w-64 overflow-y-auto px-6 py-8 pt-24 lg:block"
+>
+  <nav aria-label="Table of contents">
+    <h2
+      class="mb-4 text-xs font-semibold tracking-wider text-[#89b29e99] uppercase"
+    >
+      On This Page
+    </h2>
+    <ul id="toc-list" class="space-y-2"></ul>
+  </nav>
+</aside>
+
+<script is:inline>
+  function buildTOC() {
+    const content = document.getElementById("content");
+    const tocList = document.getElementById("toc-list");
+    if (!content || !tocList) return;
+
+    const headings = content.querySelectorAll("h2, h3");
+    tocList.innerHTML = "";
+
+    headings.forEach((heading) => {
+      if (!heading.id) return;
+
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.href = `#${heading.id}`;
+      a.textContent = heading.textContent?.replace(/^#\s*/, "") || "";
+
+      const isH3 = heading.tagName.toLowerCase() === "h3";
+      a.className = isH3
+        ? "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-6 no-underline"
+        : "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-3 no-underline";
+      a.dataset.target = heading.id;
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+
+    setupIntersectionObserver();
+  }
+
+  function setupIntersectionObserver() {
+    const headings = document.querySelectorAll("#content h2, #content h3");
+    const tocLinks = document.querySelectorAll(".toc-link");
+    if (!headings.length || !tocLinks.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+
+          const tocLink = document.querySelector(
+            `.toc-link[data-target="${entry.target.id}"]`,
+          );
+          if (!tocLink) return;
+
+          tocLinks.forEach((link) => {
+            link.classList.remove(
+              "border-[#89b29e]",
+              "text-[#89b29e]",
+              "font-semibold",
+            );
+            link.classList.add("border-transparent");
+          });
+
+          tocLink.classList.remove("border-transparent");
+          tocLink.classList.add(
+            "border-[#89b29e]",
+            "text-[#89b29e]",
+            "font-semibold",
+          );
+        });
+      },
+      { rootMargin: "-100px 0px -66%", threshold: 0 },
+    );
+
+    headings.forEach((heading) => observer.observe(heading));
+  }
+
+  buildTOC();
+  document.addEventListener("astro:page-load", buildTOC);
+</script>

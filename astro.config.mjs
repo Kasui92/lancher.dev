@@ -19,8 +19,21 @@ export default defineConfig({
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    build: {
+      sourcemap: false,
+      rollupOptions: {
+        output: {
+          sourcemap: false,
+        },
+      },
+    },
   },
   markdown: {
     remarkPlugins: [remarkAlert],
+    rehypePlugins: [],
+    shikiConfig: {
+      theme: "github-dark",
+      wrap: true,
+    },
   },
 });

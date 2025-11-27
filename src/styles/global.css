@@ -44,15 +44,3 @@ section {
 i.nf {
   @apply text-[#f2f2f2e6];
 }
-
-.hidden-toggle[aria-expanded="true"] .arrow {
-  transform: rotate(180deg);
-}
-
-.hidden-content {
-  max-height: 0;
-}
-
-.hidden-content.expanded {
-  max-height: 1000px;
-}
