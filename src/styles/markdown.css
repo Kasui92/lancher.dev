@@ -116,22 +116,40 @@
 }
 
 .markdown-content pre {
-  background-color: #1a1a1a !important;
+  background-color: #0d1117 !important;
   border-width: 1px;
-  border-color: #444;
+  border-color: #30363d;
   border-radius: 0.5rem;
   padding: 1rem;
   overflow-x: auto;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   position: relative;
+  line-height: 1.6;
 }
 
 .markdown-content pre code {
   background-color: transparent;
   border: none;
   padding: 0;
-  color: #89b29ee6;
+  font-size: calc(var(--ok-font-size) * 0.85);
+  white-space: pre;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.6;
+}
+
+/* Shiki/Astro code blocks */
+.markdown-content pre.shiki,
+.markdown-content pre.astro-code {
+  background-color: #0d1117 !important;
+  padding: 1rem;
+}
+
+.markdown-content pre.shiki code,
+.markdown-content pre.astro-code code {
+  display: block;
+  font-family: var(--ok-font-mono);
 }
 
 .code-copy-button {
