@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import { parseDocCollectionId, sortDocPages } from "@/utils/docs";
 
 import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsMobileNav from "@/components/docs/DocsMobileNav.astro";
 
 export async function getStaticPaths() {
   const docsCollection = await getCollection("docsPages");
@@ -56,26 +57,26 @@ const pageTitle =
   isFirstPage && title.toLowerCase() === "home"
     ? "Documentation"
     : `Documentation - ${title}`;
+
+// Get current slug for sidebar highlighting
+const currentSlug = Astro.params.slug || "";
 ---
 
-<DocsLayout title={pageTitle}>
+<DocsLayout title={pageTitle} currentSlug={currentSlug}>
   <main
     role="main"
     aria-label="Main content"
-    class="mx-0 my-20 flex-1 px-0 py-0 md:my-16 md:px-8 lg:my-32 lg:px-16"
+    class="my-20 w-full px-4 py-0 md:my-16 lg:my-32"
   >
-    <section aria-labelledby="doc-heading">
-      <h2 class="sr-only" id="doc-heading">
-        {pageTitle}
-      </h2>
-      <article>
-        <div
-          id="content"
-          class="markdown-content mx-auto w-full max-w-3xl p-4 leading-relaxed wrap-break-word"
-        >
-          <Content />
-        </div>
-      </article>
-    </section>
+    <DocsMobileNav currentSlug={currentSlug} />
+
+    <article>
+      <div
+        id="content"
+        class="markdown-content w-full leading-relaxed wrap-break-word"
+      >
+        <Content />
+      </div>
+    </article>
   </main>
 </DocsLayout>
