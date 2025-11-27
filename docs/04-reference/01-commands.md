@@ -46,7 +46,7 @@ lancher template add <name> <source>
 **Arguments:**
 
 - `<name>` - Template name
-- `<source>` - Local path or git URL
+- `<source>` - Local path, Zip file or git URL
 
 **Interactive:**
 

@@ -1,6 +1,6 @@
 # Managing Templates
 
-Lancher allows you to manage project templates from multiple sources. You can add templates from your local filesystem, clone them from git repositories using HTTPS or SSH protocols, and organize them in platform-specific storage directories. Once added, templates can be listed, updated with latest changes, or removed when no longer needed.
+Lancher allows you to manage project templates from multiple sources. You can add templates from your local filesystem or a Zip file, clone them from git repositories using HTTPS or SSH protocols, and organize them in platform-specific storage directories. Once added, templates can be listed, updated with latest changes, or removed when no longer needed.
 
 ## Add Templates
 
