@@ -1,56 +1,48 @@
 ---
-import { getCollection, getEntry, render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import { parseDocCollectionId, sortDocPages } from "@/utils/docs";
 import DocsLayout from "@/layouts/DocsLayout.astro";
+import DocsMobileNav from "@/components/docs/DocsMobileNav.astro";
+import DocsPageNav from "@/components/docs/DocsPageNav.astro";
 
-// Find the home page or redirect to first page
+// Get first page from sorted docs
 const docsCollection = await getCollection("docsPages");
 const sortedPages = sortDocPages(docsCollection);
 
-// Check if first page is "01-home"
 const firstPage = sortedPages[0];
 if (!firstPage) {
   return Astro.redirect("/404");
 }
 
-const firstParsed = parseDocCollectionId(firstPage.id, true);
-const isHomePage =
-  firstParsed.slug.toLowerCase() === "home" && firstParsed.order === 1;
+// Render the first page
+const { Content } = await render(firstPage);
+const parsed = parseDocCollectionId(firstPage.id, true);
 
-if (!isHomePage) {
-  // No home page, redirect to first page with clean URL
-  const parts = firstPage.id.split("/");
-  const cleanParts = parts.map((part) => part.replace(/^\d+-/, ""));
-  const cleanSlug = cleanParts.join("/");
-  return Astro.redirect(`/docs/${cleanSlug}`);
-}
+// Generate clean slug for current page highlighting
+const parts = firstPage.id.split("/");
+const cleanParts = parts.map((part) => part.replace(/^\d+-/, ""));
+const currentSlug = cleanParts.join("/");
 
-// Render the home page directly at /docs
-const docPage = await getEntry("docsPages", firstPage.id);
-if (!docPage) {
-  return Astro.redirect("/404");
-}
-
-const { Content } = await render(docPage);
 const pageTitle = "Documentation";
 ---
 
-<DocsLayout title={pageTitle}>
+<DocsLayout title={pageTitle} currentSlug={currentSlug}>
   <main
     role="main"
     aria-label="Main content"
     class="mx-0 my-20 flex-1 px-0 py-0 md:my-16 md:px-8 lg:mb-32 lg:px-16"
   >
-    <section aria-labelledby="doc-heading">
-      <h2 class="sr-only" id="doc-heading">{pageTitle}</h2>
-      <article>
-        <div
-          id="content"
-          class="markdown-content mx-auto w-full max-w-3xl p-4 leading-relaxed wrap-break-word"
-        >
-          <Content />
-        </div>
-      </article>
-    </section>
+    <DocsMobileNav currentSlug={currentSlug} />
+
+    <article>
+      <div
+        id="content"
+        class="markdown-content w-full leading-relaxed wrap-break-word"
+      >
+        <Content />
+      </div>
+    </article>
+
+    <DocsPageNav id={firstPage.id} />
   </main>
 </DocsLayout>
