@@ -13,7 +13,9 @@ const { selector = ".markdown-content" } = Astro.props;
      * @returns {void}
      */
     function addHeadingLinks() {
-      const headerElements = document.querySelectorAll(`${selector} h2`);
+      const headerElements = document.querySelectorAll(
+        `${selector} h2, ${selector} h3`,
+      );
 
       headerElements.forEach((header) => {
         // Create anchor ID from header text

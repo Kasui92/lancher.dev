@@ -17,7 +17,7 @@
     const tocList = document.getElementById("toc-list");
     if (!content || !tocList) return;
 
-    const headings = content.querySelectorAll("h2");
+    const headings = content.querySelectorAll("h2, h3");
     tocList.innerHTML = "";
 
     headings.forEach((heading) => {
@@ -27,8 +27,11 @@
       const a = document.createElement("a");
       a.href = `#${heading.id}`;
       a.textContent = heading.textContent?.replace(/^#\s*/, "") || "";
-      a.className =
-        "toc-link block text-sm text-[#e0e0e0] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-3";
+
+      const isH3 = heading.tagName.toLowerCase() === "h3";
+      a.className = isH3
+        ? "toc-link block text-sm text-[#e0e0e0] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-6"
+        : "toc-link block text-sm text-[#e0e0e0] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-3";
       a.dataset.target = heading.id;
       li.appendChild(a);
       tocList.appendChild(li);
@@ -38,7 +41,7 @@
   }
 
   function setupIntersectionObserver() {
-    const headings = document.querySelectorAll("#content h2");
+    const headings = document.querySelectorAll("#content h2, #content h3");
     const tocLinks = document.querySelectorAll(".toc-link");
     if (!headings.length || !tocLinks.length) return;
 

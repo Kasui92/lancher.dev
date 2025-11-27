@@ -97,14 +97,17 @@ const grouped = navItems.reduce(
     });
 
     if (sectionSelect && content) {
-      const headings = content.querySelectorAll("h2");
+      const headings = content.querySelectorAll("h2, h3");
       sectionSelect.innerHTML = '<option value="">Jump to section...</option>';
 
       headings.forEach((heading) => {
         if (!heading.id) return;
         const option = document.createElement("option");
         option.value = `#${heading.id}`;
-        option.textContent = heading.textContent?.replace(/^#\s*/, "") || "";
+        const isH3 = heading.tagName.toLowerCase() === "h3";
+        const prefix = isH3 ? "  " : "";
+        option.textContent =
+          prefix + (heading.textContent?.replace(/^#\s*/, "") || "");
         sectionSelect.appendChild(option);
       });
 
