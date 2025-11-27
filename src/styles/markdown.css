@@ -121,11 +121,50 @@
   border-color: #30363d;
   border-radius: 0.5rem;
   padding: 1rem;
-  overflow-x: auto;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
   position: relative;
   line-height: 1.6;
+}
+
+.markdown-content pre > code {
+  display: block;
+  overflow-x: auto;
+  padding-right: 3rem;
+  mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 3rem), transparent 100%);
+}
+
+.markdown-content pre > .code-copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+  border: 1px solid #555;
+  background-color: #1a1a1a;
+  color: #bbb;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  font-size: calc(var(--ok-font-size) * 0.67);
+  transition: all 0.2s ease;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  pointer-events: auto;
+}
+
+.markdown-content pre:hover > .code-copy-button {
+  opacity: 1;
+}
+
+.markdown-content pre > .code-copy-button:hover {
+  background-color: #2a2a2a;
+  color: white;
+  border-color: #777;
 }
 
 .markdown-content pre code {
@@ -150,35 +189,6 @@
 .markdown-content pre.astro-code code {
   display: block;
   font-family: var(--ok-font-mono);
-}
-
-.code-copy-button {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  cursor: pointer;
-  border: 1px solid #555;
-  background-color: #333;
-  color: #bbb;
-  border-radius: 0.25rem;
-  padding: 0.5rem;
-  font-size: calc(var(--ok-font-size) * 0.67);
-  transition: all 0.2s ease;
-  opacity: 0;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.markdown-content pre:hover .code-copy-button {
-  opacity: 1;
-}
-
-.code-copy-button:hover {
-  background-color: #444;
-  color: white;
 }
 
 .markdown-content blockquote {
