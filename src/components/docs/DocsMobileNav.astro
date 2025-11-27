@@ -1,6 +1,10 @@
 ---
 import { getCollection } from "astro:content";
-import { parseDocCollectionId, sortDocPages, formatChapterTitle } from "@/utils/docs";
+import {
+  parseDocCollectionId,
+  sortDocPages,
+  formatChapterTitle,
+} from "@/utils/docs";
 
 interface Props {
   currentSlug: string;
@@ -80,19 +84,15 @@ const grouped = navItems.reduce(
   <i class="nf nf-md-arrow_up text-2xl"></i>
 </button>
 
-<script>
+<script is:inline>
   function initMobileNav() {
-    const pageSelect = document.getElementById(
-      "page-select",
-    ) as HTMLSelectElement;
-    const sectionSelect = document.getElementById(
-      "section-select",
-    ) as HTMLSelectElement;
+    const pageSelect = document.getElementById("page-select");
+    const sectionSelect = document.getElementById("section-select");
     const content = document.getElementById("content");
     const scrollBtn = document.getElementById("scroll-to-top");
 
     pageSelect?.addEventListener("change", (e) => {
-      const value = (e.target as HTMLSelectElement).value;
+      const value = e.target.value;
       if (value) window.location.href = value;
     });
 
@@ -109,7 +109,7 @@ const grouped = navItems.reduce(
       });
 
       sectionSelect.addEventListener("change", (e) => {
-        const value = (e.target as HTMLSelectElement).value;
+        const value = e.target.value;
         if (value) {
           document
             .querySelector(value)
