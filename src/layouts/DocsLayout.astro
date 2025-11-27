@@ -1,5 +1,6 @@
 ---
 import Footer from "@/components/layout/Footer.astro";
+import Nav from "@/components/layout/Nav.astro";
 
 import "@/styles/global.css";
 import "@/styles/docs.css";
@@ -58,6 +59,7 @@ const { title } = Astro.props;
   <body
     class="font-monospace flex min-h-screen flex-col bg-[#221e22] font-mono text-[14px] leading-[1.6] text-[#e0e0e0]"
   >
+    <Nav />
     <slot />
     <Footer />
   </body>

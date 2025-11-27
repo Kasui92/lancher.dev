@@ -41,13 +41,16 @@ const pageTitle = "Documentation";
     aria-label="Main content"
     class="mx-0 my-20 flex-1 px-0 py-0 md:my-16 md:px-8 lg:my-32 lg:px-16"
   >
-    <article>
-      <div
-        id="content"
-        class="markdown-content mx-auto w-full max-w-3xl p-4 leading-relaxed wrap-break-word"
-      >
-        <Content />
-      </div>
-    </article>
+    <section aria-labelledby="doc-heading">
+      <h2 class="sr-only" id="doc-heading">{pageTitle}</h2>
+      <article>
+        <div
+          id="content"
+          class="markdown-content mx-auto w-full max-w-3xl p-4 leading-relaxed wrap-break-word"
+        >
+          <Content />
+        </div>
+      </article>
+    </section>
   </main>
 </DocsLayout>
