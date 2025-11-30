@@ -1,45 +1,53 @@
-<aside
-  class="docs-sidebar-right fixed top-0 right-0 hidden h-screen w-64 overflow-y-auto px-6 py-8 pt-24 lg:block"
->
-  <nav aria-label="Table of contents">
-    <h2
-      class="mb-4 text-xs font-semibold tracking-wider text-[#89b29e99] uppercase"
+---
+import type { CollectionEntry } from "astro:content";
+import { extractHeadingsFromMarkdown } from "@/utils/docs";
+
+interface Props {
+  entry: CollectionEntry<"docsPages">;
+}
+
+const { entry } = Astro.props;
+
+// Extract headings from markdown content
+const headings = extractHeadingsFromMarkdown(entry.body || "");
+---
+
+{
+  headings.length > 0 && (
+    <aside
+      id="toc-sidebar"
+      class="docs-sidebar-right fixed top-0 right-0 hidden h-screen w-64 overflow-y-auto px-6 py-8 pt-24 lg:block"
     >
-      On This Page
-    </h2>
-    <ul id="toc-list" class="space-y-2"></ul>
-  </nav>
-</aside>
+      <nav aria-label="Table of contents">
+        <h2 class="mb-4 text-xs font-semibold tracking-wider text-[#89b29e99] uppercase">
+          On This Page
+        </h2>
+        <ul id="toc-list" class="space-y-2">
+          {headings.map((heading) => {
+            const isH3 = heading.depth === 3;
+            const linkClass = isH3
+              ? "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-6 no-underline"
+              : "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-3 no-underline";
+
+            return (
+              <li>
+                <a
+                  href={`#${heading.slug}`}
+                  class={linkClass}
+                  data-target={heading.slug}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </aside>
+  )
+}
 
 <script is:inline>
-  function buildTOC() {
-    const content = document.getElementById("content");
-    const tocList = document.getElementById("toc-list");
-    if (!content || !tocList) return;
-
-    const headings = content.querySelectorAll("h2, h3");
-    tocList.innerHTML = "";
-
-    headings.forEach((heading) => {
-      if (!heading.id) return;
-
-      const li = document.createElement("li");
-      const a = document.createElement("a");
-      a.href = `#${heading.id}`;
-      a.textContent = heading.textContent?.replace(/^#\s*/, "") || "";
-
-      const isH3 = heading.tagName.toLowerCase() === "h3";
-      a.className = isH3
-        ? "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-6 no-underline"
-        : "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-3 no-underline";
-      a.dataset.target = heading.id;
-      li.appendChild(a);
-      tocList.appendChild(li);
-    });
-
-    setupIntersectionObserver();
-  }
-
   function setupIntersectionObserver() {
     const headings = document.querySelectorAll("#content h2, #content h3");
     const tocLinks = document.querySelectorAll(".toc-link");
@@ -78,6 +86,6 @@
     headings.forEach((heading) => observer.observe(heading));
   }
 
-  buildTOC();
-  document.addEventListener("astro:page-load", buildTOC);
+  setupIntersectionObserver();
+  document.addEventListener("astro:page-load", setupIntersectionObserver);
 </script>

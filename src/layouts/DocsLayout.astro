@@ -4,6 +4,7 @@ import Nav from "@/components/layout/Nav.astro";
 import MarkdownEnhancements from "@/components/MarkdownEnhancements.astro";
 import DocsSidebarLeft from "@/components/docs/DocsSidebarLeft.astro";
 import DocsSidebarRight from "@/components/docs/DocsSidebarRight.astro";
+import type { CollectionEntry } from "astro:content";
 
 import "@/styles/global.css";
 import "@/styles/docs.css";
@@ -13,9 +14,10 @@ import "@/styles/markdown.css";
 interface Props {
   title?: string;
   currentSlug?: string;
+  entry?: CollectionEntry<"docsPages">;
 }
 
-const { title, currentSlug = "" } = Astro.props;
+const { title, currentSlug = "", entry } = Astro.props;
 ---
 
 <!doctype html>
@@ -72,7 +74,7 @@ const { title, currentSlug = "" } = Astro.props;
         <slot />
       </div>
 
-      <DocsSidebarRight />
+      {entry && <DocsSidebarRight entry={entry} />}
     </div>
 
     <MarkdownEnhancements />

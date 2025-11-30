@@ -63,13 +63,13 @@ const pageTitle =
 const currentSlug = Astro.params.slug || "";
 ---
 
-<DocsLayout title={pageTitle} currentSlug={currentSlug}>
+<DocsLayout title={pageTitle} currentSlug={currentSlug} entry={docPage}>
   <main
     role="main"
     aria-label="Main content"
     class="mx-4 my-20 flex-1 px-0 py-0 md:my-16 md:px-8 lg:mb-32 lg:px-16"
   >
-    <DocsMobileNav currentSlug={currentSlug} />
+    <DocsMobileNav currentSlug={currentSlug} entry={docPage} />
 
     <article>
       <div

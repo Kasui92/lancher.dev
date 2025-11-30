@@ -7,9 +7,18 @@ const { selector = ".markdown-content" } = Astro.props;
 ---
 
 <script is:inline define:vars={{ selector }}>
+  // Generate heading slug (must be inline for browser execution)
+  const generateHeadingSlug = (text) => {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, "")
+      .replace(/\s+/g, "-")
+      .trim();
+  };
+
   function initMarkdownEnhancements() {
     /**
-     * Function to add heading links (h2)
+     * Function to add heading links (h2, h3)
      * @returns {void}
      */
     function addHeadingLinks() {
@@ -18,28 +27,29 @@ const { selector = ".markdown-content" } = Astro.props;
       );
 
       headerElements.forEach((header) => {
-        // Create anchor ID from header text
-        const text = header.textContent || "";
-        const anchorId = text
-          .toLowerCase()
-          .replace(/[^a-z0-9\s-]/g, "")
-          .replace(/\s+/g, "-")
-          .trim();
+        // Generate ID if not present
+        if (!header.id) {
+          const text = header.textContent || "";
+          header.id = generateHeadingSlug(text);
+        }
 
-        header.id = anchorId;
+        // Skip if link already exists
+        if (header.querySelector(".heading-links")) return;
+
+        const text = header.textContent || "";
 
         // Create link icon
         const linkIcon = document.createElement("a");
         linkIcon.className = "heading-links";
         linkIcon.innerHTML = "<i class='nf nf-md-link_variant'></i>";
         linkIcon.setAttribute("aria-label", `Link to ${text}`);
-        linkIcon.setAttribute("href", `#${anchorId}`);
+        linkIcon.setAttribute("href", `#${header.id}`);
         linkIcon.title = "Copy link to clipboard";
 
         // Add click handler to copy link
         linkIcon.addEventListener("click", async (e) => {
           e.preventDefault();
-          const url = `${window.location.origin}${window.location.pathname}#${anchorId}`;
+          const url = `${window.location.origin}${window.location.pathname}#${header.id}`;
 
           try {
             await navigator.clipboard.writeText(url);

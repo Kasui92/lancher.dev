@@ -92,3 +92,46 @@ export function formatChapterTitle(chapter: string | undefined): string | null {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 }
+
+/**
+ * Generate a URL-safe slug from heading text
+ * Centralized function used by TOC and heading ID generation
+ * @param text - The heading text
+ * @returns URL-safe slug
+ */
+export function generateHeadingSlug(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .trim();
+}
+
+/**
+ * Extract headings from markdown content
+ * @param markdown - The markdown content
+ * @returns Array of headings with depth, text, and slug
+ */
+export function extractHeadingsFromMarkdown(markdown: string): Array<{
+  depth: number;
+  text: string;
+  slug: string;
+}> {
+  const headings: Array<{ depth: number; text: string; slug: string }> = [];
+  const lines = markdown.split("\n");
+
+  for (const line of lines) {
+    const h2Match = line.match(/^##\s+(.+)$/);
+    const h3Match = line.match(/^###\s+(.+)$/);
+
+    if (h2Match) {
+      const text = h2Match[1].trim();
+      headings.push({ depth: 2, text, slug: generateHeadingSlug(text) });
+    } else if (h3Match) {
+      const text = h3Match[1].trim();
+      headings.push({ depth: 3, text, slug: generateHeadingSlug(text) });
+    }
+  }
+
+  return headings;
+}
