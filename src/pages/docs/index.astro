@@ -22,11 +22,9 @@ const parsed = parseDocCollectionId(firstPage.id, true);
 const parts = firstPage.id.split("/");
 const cleanParts = parts.map((part) => part.replace(/^\d+-/, ""));
 const currentSlug = cleanParts.join("/");
-
-const pageTitle = "Documentation";
 ---
 
-<DocsLayout title={pageTitle} currentSlug={currentSlug} entry={firstPage}>
+<DocsLayout currentSlug={currentSlug} entry={firstPage}>
   <main
     role="main"
     aria-label="Main content"

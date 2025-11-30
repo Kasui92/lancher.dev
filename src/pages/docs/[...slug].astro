@@ -55,9 +55,7 @@ const { Content } = await render(docPage);
 
 // Set page title
 const pageTitle =
-  isFirstPage && title.toLowerCase() === "home"
-    ? "Documentation"
-    : `Documentation - ${title}`;
+  isFirstPage && title.toLowerCase() === "home" ? undefined : title;
 
 // Get current slug for sidebar highlighting
 const currentSlug = Astro.params.slug || "";

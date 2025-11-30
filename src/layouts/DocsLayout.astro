@@ -18,6 +18,9 @@ interface Props {
 }
 
 const { title, currentSlug = "", entry } = Astro.props;
+
+// Set dynamic page title
+const pageTitle = `${title ? `${title} | ` : ""}lancher - Docs`;
 ---
 
 <!doctype html>
@@ -29,7 +32,7 @@ const { title, currentSlug = "", entry } = Astro.props;
       name="description"
       content="lancher - A minimal, local project-template manager written in Go. "
     />
-    <title>lancher - Docs</title>
+    <title>{pageTitle}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <link rel="shortcut icon" href="/favicon.ico" />
 
