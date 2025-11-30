@@ -9,8 +9,8 @@ Complete command reference.
 Create a new project from a template. Accepts template name and destination path as flags or prompts interactively.
 
 ```bash
-lancher create -t <template> -d <destination>
-lancher create --template <name> --destination <path>
+lancher create -t <template> -d <path_to_destination>
+lancher create --template <template> --destination <path_to_destination>
 ```
 
 **Flags:**
@@ -18,6 +18,7 @@ lancher create --template <name> --destination <path>
 - `-t, --template` - Template name
 - `-d, --destination` - Destination directory
 - `-p, --print` - Show command output
+- `-g, --git` - Init git repository after create
 
 **Interactive:**
 
