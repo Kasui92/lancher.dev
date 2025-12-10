@@ -69,3 +69,7 @@ done
 
 - `-t, --template <name>` - Template name
 - `-d, --destination <path>` - Destination directory
+- `--git` - Init git repository
+- `--no-git` - Skip git init
+- `--hook` - Execute all hooks from `.lancher.yaml`
+- `--no-hooks` - Skip hooks execution

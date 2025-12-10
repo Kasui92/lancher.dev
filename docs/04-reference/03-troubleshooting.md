@@ -2,8 +2,6 @@
 
 Common errors and their solutions. Most issues stem from missing templates, git authentication problems, file permissions, or failed hook commands. This guide provides diagnostic steps and fixes for each scenario.
 
-Diagnostics for template resolution errors, git clone failures (auth/network), permission issues (`chmod +x`), and hook execution failures.
-
 ## Template Not Found
 
 This error occurs when the specified template name doesn't exist in storage.

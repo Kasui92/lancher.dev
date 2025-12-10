@@ -2,8 +2,6 @@
 
 The `.lancher.yaml` file is an optional YAML configuration that defines template behavior. It specifies metadata displayed during project creation (name, description, author, version), shell commands executed after file copy (hooks), and patterns for excluding files from the copy operation (ignore). All fields are optional.
 
-Templates can include a `.lancher.yaml` file for metadata and automation.
-
 ## File Format
 
 The configuration uses standard YAML syntax with predefined top-level keys.

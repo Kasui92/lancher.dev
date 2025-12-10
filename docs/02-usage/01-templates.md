@@ -38,6 +38,25 @@ lancher template add vue git@github.com:user/vue-template.git
 
 Git-based templates maintain their repository history, allowing you to pull updates later. Authentication is handled by your git configuration (credentials for HTTPS, SSH keys for SSH).
 
+### From GitHub/GitLab CLI
+
+```bash
+lancher template add <name> gh:<user/organization>/<repo>
+lancher template add <name> gl:<user/team>/<repo>
+```
+
+Examples:
+
+```bash
+# GitHub
+lancher template add react gh:user/react-template
+
+# GitLab
+lancher template add vue gl:user/vue-template.git
+```
+
+You can use the two aliases `gh:` (GitHub) and `gl:` (GitLab) to add the template via their respective CLIs, namely [github-cli](https://cli.github.com/) and [gitlab-cli](https://gitlab.com/gitlab-org/cli) . If used, the presence of CLI commands is checked first; otherwise, they are simply replaced with HTTPS URLs, and it behaves like an HTTPS repository.
+
 ### Interactive Mode
 
 ```bash

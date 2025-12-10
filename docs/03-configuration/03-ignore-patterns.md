@@ -2,8 +2,6 @@
 
 Ignore patterns define which files and directories should be excluded during template copy operations. Patterns use glob syntax and support exact filename matches, wildcards for flexible matching, and directory paths. All patterns are case-sensitive and evaluated against each file's relative path within the template.
 
-Control which files are excluded during template copy.
-
 ## Configuration
 
 Define patterns as an array of strings. Quote patterns containing special characters.

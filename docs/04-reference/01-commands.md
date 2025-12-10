@@ -2,9 +2,7 @@
 
 Lancher provides a minimal CLI with two main commands: `create` for generating projects from templates, and `template` with subcommands for managing your template library. Most commands support both explicit flags and interactive prompts, allowing flexibility between scripting and manual use.
 
-Complete command reference.
-
-## create
+## `create`
 
 Create a new project from a template. Accepts template name and destination path as flags or prompts interactively.
 
@@ -18,7 +16,10 @@ lancher create --template <template> --destination <path_to_destination>
 - `-t, --template` - Template name
 - `-d, --destination` - Destination directory
 - `-p, --print` - Show command output
-- `-g, --git` - Init git repository after create
+- `--git` - Init git repository after create
+- `--no-git` - Skip git init repository
+- `--hooks` - Execute all hooks after create
+- `--no-hooks` - Skip hooks execution after create
 
 **Interactive:**
 
@@ -35,9 +36,7 @@ lancher create --template react --destination ~/projects/new-app
 
 The command validates the template exists before copying. If the destination directory exists, the operation aborts to prevent overwrites.
 
----
-
-## template add
+## `template add`
 
 Add template from local path or git repository. Local templates are copied, git templates are cloned.
 
@@ -48,7 +47,7 @@ lancher template add <name> <source>
 **Arguments:**
 
 - `<name>` - Template name
-- `<source>` - Local path, Zip file or git URL
+- `<source>` - Local path, Zip file, git URL oh GitHub/GitLab alias
 
 **Flags:**
 
@@ -71,11 +70,15 @@ lancher template add react https://github.com/user/react-template
 
 # Git SSH
 lancher template add vue git@github.com:user/vue-template.git
+
+# GitLab CLI
+lancher template add flutter gl:user/flutter-template
+
+# GitHub CLI
+lancher template add ruby-on-rails gh:user/ruby-on-rails-template
 ```
 
----
-
-## template list
+## `template list`
 
 List all templates.
 
@@ -90,9 +93,7 @@ lancher template ls
 - Storage path
 - Git URL (if applicable)
 
----
-
-## template update
+## `template update`
 
 Update template.
 
@@ -116,9 +117,7 @@ lancher template update react
 lancher template update nextjs -d ~/projects/updated-nextjs
 ```
 
----
-
-## template remove
+## `template remove`
 
 Remove template.
 
@@ -140,9 +139,7 @@ lancher template remove old-template
 lancher template rm unused
 ```
 
----
-
-## info
+## `info`
 
 Display storage information.
 
@@ -156,9 +153,7 @@ lancher info
 - Template list with paths
 - Git URLs
 
----
-
-## version
+## `version`
 
 Display version.
 
@@ -167,9 +162,7 @@ lancher -v
 lancher --version
 ```
 
----
-
-## upgrade
+## `upgrade`
 
 Check for updates and upgrade to the latest version
 
@@ -182,9 +175,7 @@ lancher upgrade --force
 
 - `-f, --force` - Force upgrade even if already on latest version
 
----
-
-## help
+## `help`
 
 Display help.
 
