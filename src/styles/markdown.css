@@ -6,7 +6,7 @@
 }
 
 .markdown-content {
-  color: #e0e0e0;
+  color: var(--color-foreground);
   line-height: 1.6;
   max-width: none;
   font-family: var(--ok-font-family);
@@ -19,7 +19,7 @@
 .markdown-content h4,
 .markdown-content h5,
 .markdown-content h6 {
-  color: #f2f2f2e6;
+  color: var(--color-foreground-bright);
   font-weight: 600;
   line-height: 1.4;
   margin-top: 2rem;
@@ -47,7 +47,7 @@
 }
 
 .heading-links i {
-  color: #89b29ee6;
+  color: var(--color-primary);
 }
 
 .heading-links:hover {
@@ -71,7 +71,7 @@
 .markdown-content h2 {
   font-size: calc(var(--ok-font-size) * 1.67);
   border-bottom-width: 2px;
-  border-bottom-color: #89b29e66;
+  border-bottom-color: rgb(from var(--color-primary) r g b / 0.4);
   padding-bottom: 0.5rem;
 }
 
@@ -88,7 +88,7 @@
 }
 
 .markdown-content a {
-  color: #89b29ee6;
+  color: var(--color-primary);
   text-decoration: underline;
   font-weight: 600;
   transition-property: color;
@@ -97,28 +97,28 @@
 }
 
 .markdown-content a:hover {
-  color: #c5d4c8;
+  color: var(--color-primary-light);
 }
 
 .markdown-content code {
-  background-color: #1a1a1a;
+  background-color: var(--color-surface);
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   border-width: 1px;
-  border-color: #444;
+  border-color: var(--color-border);
   border-radius: 0.25rem;
-  color: #89b29ee6;
+  color: var(--color-primary);
   font-size: calc(var(--ok-font-size) * 0.78);
   font-family: var(--ok-font-mono);
   white-space: nowrap;
 }
 
 .markdown-content pre {
-  background-color: #0d1117 !important;
+  background-color: var(--color-background-secondary) !important;
   border-width: 1px;
-  border-color: #30363d;
+  border-color: var(--color-border);
   border-radius: 0.5rem;
   padding: 1rem;
   margin-top: 1.5rem;
@@ -148,9 +148,9 @@
   top: 0.5rem;
   right: 0.5rem;
   cursor: pointer;
-  border: 1px solid #555;
-  background-color: #1a1a1a;
-  color: #bbb;
+  border: 1px solid var(--color-border-light);
+  background-color: var(--color-surface);
+  color: var(--color-foreground-secondary);
   border-radius: 0.25rem;
   padding: 0.5rem;
   font-size: calc(var(--ok-font-size) * 0.67);
@@ -170,9 +170,9 @@
 }
 
 .markdown-content pre > .code-copy-button:hover {
-  background-color: #2a2a2a;
-  color: white;
-  border-color: #777;
+  background-color: var(--color-surface-hover);
+  color: var(--color-foreground-bright);
+  border-color: rgb(from var(--color-primary) r g b / 0.4);
 }
 
 .markdown-content pre code {
@@ -189,7 +189,7 @@
 /* Shiki/Astro code blocks */
 .markdown-content pre.shiki,
 .markdown-content pre.astro-code {
-  background-color: #0d1117 !important;
+  background-color: var(--color-background-secondary) !important;
   padding: 1rem;
 }
 
@@ -201,8 +201,8 @@
 
 .markdown-content blockquote {
   border-left-width: 4px;
-  border-left-color: #89b29ee6;
-  background-color: #2a2a2a;
+  border-left-color: var(--color-primary);
+  background-color: var(--color-background-tertiary);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1rem;
@@ -217,12 +217,12 @@
 .markdown-content blockquote p {
   margin: 0;
   font-style: italic;
-  color: #89b29ee6;
+  color: var(--color-primary);
 }
 
 .markdown-content .markdown-alert {
   border-left-width: 4px;
-  background-color: #2a2a2a;
+  background-color: var(--color-background-tertiary);
   padding-left: 1.5rem;
   padding-right: 1.5rem;
   padding-top: 1rem;
@@ -236,7 +236,7 @@
 
 .markdown-content ul,
 .markdown-content ol {
-  color: #e0e0e0;
+  color: var(--color-foreground);
   padding-left: 1.5rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
@@ -257,19 +257,19 @@
 }
 
 .markdown-content strong {
-  color: #f2f2f2e6;
+  color: var(--color-foreground-bright);
   font-weight: 600;
 }
 
 .markdown-content em {
   font-style: italic;
-  color: #89b29ee6;
+  color: var(--color-primary);
 }
 
 .markdown-content hr {
   border-width: 0;
   border-top-width: 2px;
-  border-top-color: #89b29e66;
+  border-top-color: rgb(from var(--color-primary) r g b / 0.4);
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
@@ -279,7 +279,7 @@
   border-collapse: collapse;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
-  border: 1px solid #444;
+  border: 1px solid var(--color-border);
   border-radius: 0.5rem;
   overflow: hidden;
 }
@@ -288,8 +288,8 @@
 .markdown-content td {
   padding: 0.75rem 1rem;
   text-align: left;
-  border-bottom: 1px solid #333;
-  border-right: 1px solid #333;
+  border-bottom: 1px solid var(--color-border-dark);
+  border-right: 1px solid var(--color-border-dark);
 }
 
 .markdown-content th:last-child,
@@ -302,14 +302,14 @@
 }
 
 .markdown-content th {
-  background-color: #2a2a2a;
-  color: #f2f2f2e6;
+  background-color: var(--color-background-tertiary);
+  color: var(--color-foreground-bright);
   font-weight: 600;
   font-size: calc(var(--ok-font-size) * 0.78);
 }
 
 .markdown-content td {
-  color: #e0e0e0;
+  color: var(--color-foreground);
   font-size: calc(var(--ok-font-size) * 0.78);
 }
 
@@ -318,7 +318,7 @@
 }
 
 .markdown-content tbody tr:hover {
-  background-color: #222;
+  background-color: var(--color-surface-hover);
 }
 
 .markdown-content img,
@@ -329,4 +329,97 @@
   margin-bottom: 1.5rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Image lightbox styles */
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.image-lightbox.hidden {
+  display: none;
+}
+
+.image-lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+
+.image-lightbox-content {
+  position: relative;
+  max-width: 95vw;
+  max-height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.image-lightbox-img {
+  max-width: 100%;
+  max-height: 95vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.image-lightbox-close {
+  position: absolute;
+  top: -48px;
+  right: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(8px);
+}
+
+.image-lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.image-lightbox-close:active {
+  transform: scale(0.95);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Make markdown images look clickable */
+.markdown-content img.lightbox-enabled {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+.markdown-content img.lightbox-enabled:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
 }

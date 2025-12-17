@@ -30,9 +30,12 @@ const navItems = sortedPages.map((page) => {
   };
 });
 
-const grouped = navItems.reduce(
+const pagesWithoutChapter = navItems.filter((item) => !item.chapter);
+const pagesWithChapter = navItems.filter((item) => item.chapter);
+
+const grouped = pagesWithChapter.reduce(
   (acc, item) => {
-    const chapter = item.chapter || "General";
+    const chapter = item.chapter!;
     if (!acc[chapter]) acc[chapter] = [];
     acc[chapter].push(item);
     return acc;
@@ -46,9 +49,33 @@ const grouped = navItems.reduce(
 >
   <nav aria-label="Documentation navigation">
     {
+      pagesWithoutChapter.length > 0 && (
+        <div class="mb-6">
+          <ul class="space-y-1">
+            {pagesWithoutChapter.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[
+                    "block rounded px-3 py-2 text-sm no-underline transition-colors",
+                    item.isActive
+                      ? "bg-primary/10 text-primary font-semibold"
+                      : "text-foreground hover:bg-primary/10 hover:text-primary",
+                  ]}
+                  aria-current={item.isActive ? "page" : undefined}
+                >
+                  {item.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+    {
       Object.entries(grouped).map(([chapter, pages]) => (
         <div class="mb-6">
-          <h3 class="mb-2 px-3 text-xs font-semibold tracking-wider text-[#89b29e99] uppercase">
+          <h3 class="text-primary/60 mb-2 px-3 text-xs font-semibold tracking-wider uppercase">
             {formatChapterTitle(chapter)}
           </h3>
           <ul class="space-y-1">
@@ -57,10 +84,10 @@ const grouped = navItems.reduce(
                 <a
                   href={item.href}
                   class:list={[
-                    "block rounded px-3 py-2 text-sm transition-colors",
+                    "block rounded px-3 py-2 text-sm no-underline transition-colors",
                     item.isActive
-                      ? "bg-[#89b29e1a] font-semibold text-[#89b29e]"
-                      : "text-[#e0e0e0] hover:bg-[#89b29e0d] hover:text-[#89b29e]",
+                      ? "bg-primary/10 text-primary font-semibold"
+                      : "text-foreground hover:bg-primary/10 hover:text-primary",
                   ]}
                   aria-current={item.isActive ? "page" : undefined}
                 >

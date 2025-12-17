@@ -2,11 +2,49 @@
 
 @import "tailwindcss";
 
+@theme {
+  /* Background colors */
+  --color-background: #221e22;
+  --color-background-secondary: #1a1a1a;
+  --color-background-tertiary: #2a2a2a;
+  --color-surface: #0d1117;
+  --color-surface-hover: #222;
+
+  /* Primary colors - Sage green */
+  --color-primary: #89b29ee6;
+  --color-primary-dark: #6a9180;
+  --color-primary-light: #c5d4c8;
+
+  /* Foreground colors */
+  --color-foreground: #e0e0e0;
+  --color-foreground-secondary: #e0e0e090;
+  --color-foreground-muted: #bbb;
+  --color-foreground-bright: #f2f2f2e6;
+
+  /* Border colors */
+  --color-border: #444;
+  --color-border-light: #555;
+  --color-border-dark: #333;
+
+  /* Utility colors */
+  --color-error: #f7768e;
+  --color-warning: #e0af68;
+  --color-info: #7aa2f7;
+  --color-success: #89b29e;
+}
+
 @layer base {
+  html {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
   h1,
   h2,
   h3 {
-    color: #f2f2f2e6;
+    color: var(--color-foreground-bright);
   }
 
   h2 {
@@ -22,11 +60,11 @@
   }
 
   a {
-    @apply font-bold text-[#89b29ee6] underline transition duration-300 ease-in-out hover:text-[#c5d4c8];
+    @apply text-primary hover:text-primary-light font-bold underline transition duration-300 ease-in-out;
   }
 
   i {
-    @apply text-[#89b29ee6] italic;
+    @apply text-primary italic;
   }
 }
 
@@ -34,7 +72,7 @@ nav,
 header,
 section,
 footer {
-  @apply mx-auto mt-0 max-w-[800px];
+  @apply mx-auto mt-0 max-w-200;
 }
 
 section {
@@ -42,5 +80,5 @@ section {
 }
 
 i.nf {
-  @apply text-[#f2f2f2e6];
+  @apply text-foreground-bright;
 }

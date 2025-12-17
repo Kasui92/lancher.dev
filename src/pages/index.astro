@@ -8,25 +8,25 @@ import Layout from "@/layouts/Layout.astro";
 
   <section aria-labelledby="intro-heading">
     <h2 class="sr-only" id="intro-heading">Introduction</h2>
-    <p class="mt-6 mb-16 text-[1.1rem] leading-[1.8] text-[#ccc]">
+    <p class="text-foreground-muted mt-6 mb-16 text-[1.1rem] leading-[1.8]">
       <p>
         To install <strong>lancher</strong>, run the following command in your
         terminal:
       </p>
       <div
-        class="relative mx-0 my-6 flex items-center gap-4 rounded-sm border border-[#444] bg-[#1a1a1a] p-4"
+        class="border-border bg-background-secondary relative mx-0 my-6 flex items-center gap-4 rounded-sm border p-4"
         role="group"
         aria-label={`Installation command for lancher`}
       >
         <code
-          class="scrollbar-hide flex flex-1 items-center overflow-x-auto bg-none text-[0.9rem] whitespace-nowrap text-[#89b29ee6] lg:overflow-visible"
+          class="scrollbar-hide text-primary/90 flex flex-1 items-center overflow-x-auto bg-none text-[0.9rem] whitespace-nowrap lg:overflow-visible"
           aria-label="Installation command"
           style="scrollbar-width: none; -ms-overflow-style: none;"
         >
           curl -fsSL https://lancher.dev/install.sh | sh
         </code>
         <button
-          class="ml-8 flex shrink-0 cursor-pointer items-center justify-center rounded border border-[#555] bg-[#333] px-4 py-2 text-[0.75rem] text-[#bbb] transition-colors hover:bg-[#444] hover:text-white"
+          class="border-border-light bg-border-dark text-foreground-muted hover:bg-border hover:text-foreground-bright flex shrink-0 cursor-pointer items-center justify-center rounded border px-4 py-2 text-[0.75rem] transition-colors"
           onclick={`navigator.clipboard.writeText('curl -fsSL https://lancher.dev/install.sh | sh')`}
           title="Copy to clipboard"
           aria-label="Copy installation command to clipboard"
@@ -34,13 +34,13 @@ import Layout from "@/layouts/Layout.astro";
           <i class="nf nf-md-content_copy"></i>
         </button>
       </div>
-      <p class="mt-2 text-[0.85rem] text-[#888] italic">
+      <p class="text-foreground-secondary mt-2 text-[0.85rem] italic">
         Currently available for <i>macOS</i> and <i>Linux</i>. You can also
         download pre-compiled binaries from the <a
           href="https://github.com/Kasui92/lancher/releases/latest"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-[#89b29e] hover:underline">latest release</a
+          class="text-primary hover:underline">latest release</a
         >.
       </p>
     </p>

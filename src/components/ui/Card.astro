@@ -8,14 +8,14 @@ interface Props {
 const { variant = "default", hover = true, class: className } = Astro.props;
 
 const variantClasses = {
-  default: "border border-[#333] bg-[#2a2a2a]",
+  default: "border border-border-dark bg-background-tertiary",
   elevated:
-    "border border-[#333] bg-gradient-to-br from-[#2a2a2a] to-[#1a1a1a] shadow-[0_8px_20px_rgba(0,0,0,0.3)]",
-  outlined: "border-2 border-[#89b29e]/30 bg-transparent",
+    "border border-border-dark bg-gradient-to-br from-background-tertiary to-background-secondary shadow-[0_8px_20px_rgba(0,0,0,0.3)]",
+  outlined: "border-2 border-primary/30 bg-transparent",
 };
 
 const hoverClasses = hover
-  ? "transition-all duration-300 hover:border-[#89b29e] hover:scale-105"
+  ? "transition-all duration-300 hover:border-primary hover:scale-105"
   : "";
 ---
 

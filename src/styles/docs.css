@@ -57,13 +57,13 @@ html {
 
 .docs-sidebar-left::-webkit-scrollbar-thumb,
 .docs-sidebar-right::-webkit-scrollbar-thumb {
-  background: #89b29e33;
+  background: rgb(from var(--color-primary) r g b / 0.2);
   border-radius: 3px;
 }
 
 .docs-sidebar-left::-webkit-scrollbar-thumb:hover,
 .docs-sidebar-right::-webkit-scrollbar-thumb:hover {
-  background: #89b29e66;
+  background: rgb(from var(--color-primary) r g b / 0.4);
 }
 
 /* Mobile navigation select styling */
@@ -78,13 +78,13 @@ html {
 
 .docs-mobile-nav optgroup {
   font-weight: 600;
-  color: #89b29e;
-  background: #1a1a1a;
+  color: var(--color-primary);
+  background: var(--color-surface);
 }
 
 .docs-mobile-nav option {
   font-weight: 400;
-  color: #e0e0e0;
-  background: #1a1a1a;
+  color: var(--color-foreground);
+  background: var(--color-surface);
   padding: 0.5rem;
 }

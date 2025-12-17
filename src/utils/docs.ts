@@ -1,3 +1,4 @@
+import { slug as githubSlug } from "github-slugger";
 import { ucfirst } from "./helpers";
 import type { ParsedDocsCollectionId } from "../@types/docs";
 
@@ -100,11 +101,7 @@ export function formatChapterTitle(chapter: string | undefined): string | null {
  * @returns URL-safe slug
  */
 export function generateHeadingSlug(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .trim();
+  return githubSlug(text);
 }
 
 /**

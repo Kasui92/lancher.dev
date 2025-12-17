@@ -33,9 +33,12 @@ const navItems = sortedPages.map((page) => {
   };
 });
 
-const grouped = navItems.reduce(
+const pagesWithoutChapter = navItems.filter((item) => !item.chapter);
+const pagesWithChapter = navItems.filter((item) => item.chapter);
+
+const grouped = pagesWithChapter.reduce(
   (acc, item) => {
-    const chapter = item.chapter || "General";
+    const chapter = item.chapter!;
     if (!acc[chapter]) acc[chapter] = [];
     acc[chapter].push(item);
     return acc;
@@ -53,8 +56,16 @@ const headings = extractHeadingsFromMarkdown(entry.body || "");
     <label for="page-select" class="sr-only">Select page</label>
     <select
       id="page-select"
-      class="w-full rounded-lg border border-[#89b29e33] bg-[#1a1a1a] px-4 py-3 text-[#e0e0e0] transition-colors focus:border-[#89b29e] focus:outline-none"
+      class="border-primary/20 bg-surface text-foreground focus:border-primary w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none"
     >
+      {
+        pagesWithoutChapter.length > 0 &&
+          pagesWithoutChapter.map((page) => (
+            <option value={page.href} selected={page.isActive}>
+              {page.title}
+            </option>
+          ))
+      }
       {
         Object.entries(grouped).map(([chapter, pages]) => (
           <optgroup label={formatChapterTitle(chapter) || chapter}>
@@ -77,7 +88,7 @@ const headings = extractHeadingsFromMarkdown(entry.body || "");
         </label>
         <select
           id="section-select"
-          class="w-full rounded-lg border border-[#89b29e33] bg-[#1a1a1a] px-4 py-3 text-[#e0e0e0] transition-colors focus:border-[#89b29e] focus:outline-none"
+          class="border-primary/20 bg-surface text-foreground focus:border-primary w-full rounded-lg border px-4 py-3 transition-colors focus:outline-none"
         >
           <option value="">Jump to section...</option>
           {headings.map((heading) => {
@@ -99,7 +110,7 @@ const headings = extractHeadingsFromMarkdown(entry.body || "");
 <!-- Scroll to top button -->
 <button
   id="scroll-to-top"
-  class="pointer-events-none fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-[#89b29e] text-[#221e22] opacity-0 shadow-lg transition-opacity duration-300 hover:bg-[#a5c9b5] lg:hidden"
+  class="bg-primary text-background hover:bg-primary-light pointer-events-none fixed right-6 bottom-6 z-50 flex h-12 w-12 items-center justify-center rounded-full opacity-0 shadow-lg transition-opacity duration-300 lg:hidden"
   aria-label="Scroll to top"
 >
   <i class="nf nf-md-arrow_up text-2xl"></i>

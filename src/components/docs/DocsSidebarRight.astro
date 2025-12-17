@@ -19,15 +19,15 @@ const headings = extractHeadingsFromMarkdown(entry.body || "");
       class="docs-sidebar-right fixed top-0 right-0 hidden h-screen w-64 overflow-y-auto px-6 py-8 pt-24 lg:block"
     >
       <nav aria-label="Table of contents">
-        <h2 class="mb-4 text-xs font-semibold tracking-wider text-[#89b29e99] uppercase">
+        <h2 class="text-primary/60 mb-4 text-xs font-semibold tracking-wider uppercase">
           On This Page
         </h2>
         <ul id="toc-list" class="space-y-2">
           {headings.map((heading) => {
             const isH3 = heading.depth === 3;
             const linkClass = isH3
-              ? "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-6 no-underline"
-              : "toc-link block text-xs text-[#e0e0e090] hover:text-[#89b29e] transition-colors py-1 border-l-2 border-transparent pl-3 no-underline";
+              ? "toc-link block text-xs text-foreground/60 hover:text-primary transition-colors py-1 border-l-2 border-transparent pl-6 no-underline"
+              : "toc-link block text-xs text-foreground/60 hover:text-primary transition-colors py-1 border-l-2 border-transparent pl-3 no-underline";
 
             return (
               <li>
@@ -64,20 +64,12 @@ const headings = extractHeadingsFromMarkdown(entry.body || "");
           if (!tocLink) return;
 
           tocLinks.forEach((link) => {
-            link.classList.remove(
-              "border-[#89b29e]",
-              "text-[#89b29e]",
-              "font-semibold",
-            );
+            link.classList.remove("border-primary");
             link.classList.add("border-transparent");
           });
 
           tocLink.classList.remove("border-transparent");
-          tocLink.classList.add(
-            "border-[#89b29e]",
-            "text-[#89b29e]",
-            "font-semibold",
-          );
+          tocLink.classList.add("border-primary");
         });
       },
       { rootMargin: "-100px 0px -66%", threshold: 0 },
