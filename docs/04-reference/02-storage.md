@@ -61,15 +61,16 @@ lancher info
 Output:
 
 ```
-Storage Directory: /home/user/.local/share/lancher/templates
+Storage Directory:  /home/user/.local/share/lancher/templates
+Templates:          2
 
 Templates:
 
   nextjs-starter
-    /home/user/.local/share/lancher/templates/nextjs-starter
+    Path: /home/user/.local/share/lancher/templates/nextjs-starter
 
   react-app
-    /home/user/.local/share/lancher/templates/react-app
+    Path: /home/user/.local/share/lancher/templates/react-app
     Git: https://github.com/user/react-template
 ```
 

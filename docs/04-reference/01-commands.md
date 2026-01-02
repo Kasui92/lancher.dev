@@ -150,8 +150,7 @@ lancher info
 **Output:**
 
 - Storage directory
-- Template list with paths
-- Git URLs
+- Template list (with meta info)
 
 ## `version`
 

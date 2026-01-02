@@ -6,7 +6,11 @@ Lancher allows you to manage project templates from multiple sources. You can ad
 
 Templates can be sourced from local directories or remote git repositories. Local templates are copied to lancher's storage, while git templates are cloned and can be kept up-to-date.
 
+You can use the **interactive mode** at any time, which helps you create the template.
+
 ### From Local Directory
+
+This command copies the entire directory structure from the specified path into lancher's template storage, preserving file permissions and directory hierarchy.
 
 ```bash
 lancher template add <name> <path>
@@ -18,9 +22,9 @@ Example:
 lancher template add nextjs ~/projects/nextjs-base
 ```
 
-This command copies the entire directory structure from the specified path into lancher's template storage, preserving file permissions and directory hierarchy.
-
 ### From Git Repository
+
+Git-based templates maintain their repository history, allowing you to pull updates later. Authentication is handled by your git configuration (credentials for HTTPS, SSH keys for SSH).
 
 ```bash
 lancher template add <name> <git-url>
@@ -36,9 +40,9 @@ lancher template add react https://github.com/user/react-template
 lancher template add vue git@github.com:user/vue-template.git
 ```
 
-Git-based templates maintain their repository history, allowing you to pull updates later. Authentication is handled by your git configuration (credentials for HTTPS, SSH keys for SSH).
-
 ### From GitHub/GitLab CLI
+
+You can use the two aliases `gh:` (GitHub) and `gl:` (GitLab) to add the template via their respective CLIs, namely [github-cli](https://cli.github.com/) and [gitlab-cli](https://gitlab.com/gitlab-org/cli). If used, the presence of CLI commands is checked first; otherwise, they are simply replaced with HTTPS URLs, and it behaves like an HTTPS repository.
 
 ```bash
 lancher template add <name> gh:<user/organization>/<repo>
@@ -53,14 +57,6 @@ lancher template add react gh:user/react-template
 
 # GitLab
 lancher template add vue gl:user/vue-template.git
-```
-
-You can use the two aliases `gh:` (GitHub) and `gl:` (GitLab) to add the template via their respective CLIs, namely [github-cli](https://cli.github.com/) and [gitlab-cli](https://gitlab.com/gitlab-org/cli) . If used, the presence of CLI commands is checked first; otherwise, they are simply replaced with HTTPS URLs, and it behaves like an HTTPS repository.
-
-### Interactive Mode
-
-```bash
-lancher template add
 ```
 
 ## List Templates
@@ -110,22 +106,10 @@ lancher template remove <name>
 lancher template rm <name>
 ```
 
-Interactive mode (select from list):
+Interactive mode (multiple select from list):
 
 ```bash
 lancher template remove
 ```
 
 **Warning:** This action cannot be undone.
-
-## Storage Information
-
-```bash
-lancher info
-```
-
-Shows:
-
-- Storage directory path
-- List of all templates with locations
-- Git repository URLs
